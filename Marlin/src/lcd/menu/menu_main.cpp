@@ -235,6 +235,10 @@ void menu_main() {
   START_MENU();
   BACK_ITEM(MSG_INFO_SCREEN);
 
+  if (planner.movesplanned() > 0)
+      GCODES_ITEM(MSG_BUTTON_STOP, F("G80\nG28"));
+  else{
+
   #if ENABLED(SDSUPPORT)
 
     #if !defined(MEDIA_MENU_AT_TOP) && !HAS_ENCODER_WHEEL
@@ -316,9 +320,6 @@ void menu_main() {
       SUBMENU(MSG_PREHEAT_CUSTOM, menu_preheat_only);
     #endif
 
-    if (planner.movesplanned() > 0)
-      GCODES_ITEM(MSG_BUTTON_STOP, F("G80"));
-    else
       SUBMENU(MSG_MOTION, menu_motion);
   }
 
@@ -455,7 +456,7 @@ void menu_main() {
       );
     });
   #endif
-
+  }
   END_MENU();
 }
 
