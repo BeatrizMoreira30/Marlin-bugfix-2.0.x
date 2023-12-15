@@ -206,9 +206,9 @@ void menu_move() {
   // Move submenu for each axis
   if (NONE(IS_KINEMATIC, NO_MOTION_BEFORE_HOMING) || all_axes_homed()) {
     if (TERN1(DELTA, current_position.z <= delta_clip_start_height)) {
-      // SUBMENU_N(X_AXIS, MSG_MOVE_N, []{ _menu_move_distance(X_AXIS, []{ lcd_move_axis(X_AXIS); }); });
+      SUBMENU_N(X_AXIS, MSG_MOVE_N, []{ _menu_move_distance(X_AXIS, []{ lcd_move_axis(X_AXIS); }); });
       #if HAS_Y_AXIS
-        // SUBMENU_N(Y_AXIS, MSG_MOVE_N, []{ _menu_move_distance(Y_AXIS, []{ lcd_move_axis(Y_AXIS); }); });
+        SUBMENU_N(Y_AXIS, MSG_MOVE_N, []{ _menu_move_distance(Y_AXIS, []{ lcd_move_axis(Y_AXIS); }); });
       #endif
     }
     else {
@@ -218,11 +218,11 @@ void menu_move() {
     }
     #if HAS_Z_AXIS
       #define _AXIS_MOVE(N) SUBMENU_N(N, MSG_MOVE_N, []{ _menu_move_distance(AxisEnum(N), []{ lcd_move_axis(AxisEnum(N)); }); });
-      // REPEAT_S(2, NUM_AXES, _AXIS_MOVE);
+      REPEAT_S(2, NUM_AXES, _AXIS_MOVE);
     #endif
   }
   else
-    // GCODES_ITEM(MSG_AUTO_HOME, FPSTR(G28_STR));
+    GCODES_ITEM(MSG_AUTO_HOME, FPSTR(G28_STR));
 
   #if ANY(SWITCHING_EXTRUDER, SWITCHING_NOZZLE, MAGNETIC_SWITCHING_TOOLHEAD)
 
@@ -286,22 +286,22 @@ void menu_move() {
   END_MENU();
 }
 
-// #define _HOME_ITEM(N) GCODES_ITEM_N(N##_AXIS, MSG_AUTO_HOME_A, F("G28" STR_##N));
+#define _HOME_ITEM(N) GCODES_ITEM_N(N##_AXIS, MSG_AUTO_HOME_A, F("G28" STR_##N));
 
-// #if ENABLED(INDIVIDUAL_AXIS_HOMING_SUBMENU)
-//   //
-//   // "Motion" > "Homing" submenu
-//   //
-//   void menu_home() {
-//     START_MENU();
-//     BACK_ITEM(MSG_MOTION);
+#if ENABLED(INDIVIDUAL_AXIS_HOMING_SUBMENU)
+  //
+  // "Motion" > "Homing" submenu
+  //
+  void menu_home() {
+    // START_MENU();
+    // BACK_ITEM(MSG_MOTION);
 
-//     GCODES_ITEM(MSG_AUTO_HOME, F("G28 X"));
-//     MAIN_AXIS_MAP(_HOME_ITEM);
+    // GCODES_ITEM(MSG_AUTO_HOME, F("G28 X"));
+    // MAIN_AXIS_MAP(_HOME_ITEM);
 
-//     END_MENU();
-//   }
-// #endif
+    // END_MENU();
+  }
+#endif
 
 #if ENABLED(AUTO_BED_LEVELING_UBL)
   void _lcd_ubl_level_bed();
@@ -328,14 +328,14 @@ void menu_motion() {
   
   GCODES_ITEM(MSG_BUTTON_INIT, F("M73 P0\nG28 X Y Z\nG1 X106 Y10\nG1 Z10\nG4 S2\nM73 P3.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P6.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P10\nG28 Z0\nG1 Y10 X177\nG1 Z10\nG4 S2\nM73 P13.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P16.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P20\nG28 Z0\nG1 Y10 X248\nG1 Z10\nG4 S2\nM73 P23.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P26.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P30\nG28 Z0\nG1 Y10 X319\nG1 Z10\nG4 S2\nM73 P33.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P36.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P40\nG28 Z0\nG1 Y10 X390\nG1 Z10\nG4 S2\nM73 P43.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P46.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P50\nG28 Z0\nG1 Y10 X461\nG1 Z10\nG4 S2\nM73 P53.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P56.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P60\nG28 Z0\nG1 Y10 X532\nG1 Z10\nG4 S2\nM73 P63.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P66.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P70\nG28 Z0\nG1 Y10 X603\nG1 Z10\nG4 S2\nM73 P73.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P76.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P80\nG28 Z0\nG1 Y10 X674\nG1 Z10\nG4 S2\nM73 P83.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P86.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P90\nG28 Z0\nG1 Y10 X745\nG1 Z10\nG4 S2\nM73 P93.4\nG28 Z0\nG1 Y80\nG1 Z10\nG4 S2\nM73 P16.7\nG28 Z0\nG1 Y150\nG1 Z10\nG4 S2\nM73 P100\nG28\nM18 S2"));
  
-  if (TERN1(DELTA, all_axes_homed()))
+  if (TERN1(DELTA, all_axes_homed())){
     // SUBMENU(MSG_MOVE_AXIS, menu_move);
-
+  }
   //
   // Auto Home
   //
   #if ENABLED(INDIVIDUAL_AXIS_HOMING_SUBMENU)
-    // SUBMENU(MSG_HOMING, menu_home);
+    SUBMENU(MSG_HOMING, menu_home);
   #else
     // GCODES_ITEM(MSG_AUTO_HOME, FPSTR(G28_STR));
     #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
