@@ -320,7 +320,7 @@ void menu_main() {
       SUBMENU(MSG_PREHEAT_CUSTOM, menu_preheat_only);
     #endif
 
-      SUBMENU(MSG_MOTION, menu_motion);
+    SUBMENU(MSG_MOTION, menu_motion);
   }
 
   #if HAS_CUTTER
@@ -344,8 +344,7 @@ void menu_main() {
   #endif
   
 
-  if (planner.movesplanned() == 0)
-    SUBMENU(MSG_CONFIGURATION, menu_configuration);
+  SUBMENU(MSG_CONFIGURATION, menu_configuration);
 
   #if ENABLED(CUSTOM_MENU_MAIN)
     if (TERN1(CUSTOM_MENU_MAIN_ONLY_IDLE, !busy)) {
