@@ -236,7 +236,7 @@ void menu_main() {
   BACK_ITEM(MSG_INFO_SCREEN);
 
   if (planner.movesplanned() > 0)
-      GCODES_ITEM(MSG_BUTTON_STOP, F("G80\ng28 Z\nG1 Z3\nG28\nM18 S2\n"));
+      GCODES_ITEM(MSG_BUTTON_STOP, F("G80\nG28\nM18 S2\n"));
   else{
 
   #if ENABLED(SDSUPPORT)
